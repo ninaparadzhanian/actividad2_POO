@@ -14,13 +14,11 @@ Aplicación Java simple para gestionar estudiantes y cursos, desarrollada como p
 ## Estructura del Proyecto
 GestionEstudiantes/
 ├── src/
-│   └── gestionestudiantes/
-│       ├── Estudiante.java
-│       ├── Curso.java
-│       └── Main.java
-├── README.md
-└── presentacion.pptx
-
+│ └── gestionestudiantes/
+│ ├── Estudiante.java
+│ ├── Curso.java
+│ └── Main.java
+└── README.md
 ## Conceptos Aplicados
 - Programación Orientada a Objetos (POO)
 - Declaración de clases y atributos
