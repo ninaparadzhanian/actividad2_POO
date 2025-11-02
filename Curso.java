@@ -4,51 +4,35 @@ import java.util.ArrayList;
 
 /**
  * Clase que representa un Curso que contiene múltiples estudiantes
- * Demuestra el uso de colecciones y métodos para gestionar grupos de objetos
+ * Ahora puede manejar diferentes tipos de estudiantes gracias a la herencia
  */
 public class Curso {
-    // Atributos de la clase
     private String nombreCurso;
     private String codigoCurso;
     private ArrayList<Estudiante> listaEstudiantes;
     
-    /**
-     * Constructor de la clase Curso
-     * @param nombreCurso Nombre del curso
-     * @param codigoCurso Código identificador del curso
-     */
     public Curso(String nombreCurso, String codigoCurso) {
         this.nombreCurso = nombreCurso;
         this.codigoCurso = codigoCurso;
         this.listaEstudiantes = new ArrayList<>();
     }
     
-    // Métodos Getters
-    public String getNombreCurso() {
-        return nombreCurso;
-    }
-    
-    public String getCodigoCurso() {
-        return codigoCurso;
-    }
-    
-    public ArrayList<Estudiante> getListaEstudiantes() {
-        return listaEstudiantes;
-    }
+    // Getters
+    public String getNombreCurso() { return nombreCurso; }
+    public String getCodigoCurso() { return codigoCurso; }
+    public ArrayList<Estudiante> getListaEstudiantes() { return listaEstudiantes; }
     
     /**
-     * Método para agregar un estudiante al curso
-     * @param estudiante Objeto Estudiante a agregar
+     * Método para agregar cualquier tipo de Estudiante (gracias a la herencia)
      */
     public void agregarEstudiante(Estudiante estudiante) {
         listaEstudiantes.add(estudiante);
-        System.out.println("Estudiante " + estudiante.getNombreCompleto() + " agregado al curso.");
+        System.out.println("Estudiante " + estudiante.getNombreCompleto() + 
+                          " (" + estudiante.getTipoEstudiante() + ") agregado al curso.");
     }
     
     /**
      * Método para eliminar un estudiante del curso por código
-     * @param codigo Código del estudiante a eliminar
-     * @return true si se eliminó correctamente, false si no se encontró
      */
     public boolean eliminarEstudiante(String codigo) {
         for (Estudiante est : listaEstudiantes) {
@@ -64,8 +48,6 @@ public class Curso {
     
     /**
      * Método para buscar un estudiante por código
-     * @param codigo Código del estudiante a buscar
-     * @return Objeto Estudiante si se encuentra, null si no existe
      */
     public Estudiante buscarEstudiante(String codigo) {
         for (Estudiante est : listaEstudiantes) {
@@ -78,7 +60,6 @@ public class Curso {
     
     /**
      * Método para calcular el promedio general del curso
-     * @return Promedio general de todos los estudiantes
      */
     public double calcularPromedioGeneral() {
         if (listaEstudiantes.isEmpty()) {
@@ -94,6 +75,7 @@ public class Curso {
     
     /**
      * Método para mostrar todos los estudiantes del curso
+     * Ahora muestra información específica de cada tipo de estudiante
      */
     public void mostrarEstudiantes() {
         if (listaEstudiantes.isEmpty()) {
@@ -111,7 +93,6 @@ public class Curso {
     
     /**
      * Método para contar estudiantes sobresalientes
-     * @return Cantidad de estudiantes con promedio >= 4.0
      */
     public int contarSobresalientes() {
         int count = 0;
@@ -121,5 +102,41 @@ public class Curso {
             }
         }
         return count;
+    }
+    
+    /**
+     * NUEVO: Método para contar estudiantes por tipo
+     */
+    public void mostrarEstadisticasPorTipo() {
+        int pregrado = 0, posgrado = 0, intercambio = 0;
+        
+        for (Estudiante est : listaEstudiantes) {
+            if (est instanceof EstudiantePregrado) {
+                pregrado++;
+            } else if (est instanceof EstudiantePosgrado) {
+                posgrado++;
+            } else if (est instanceof EstudianteIntercambio) {
+                intercambio++;
+            }
+        }
+        
+        System.out.println("\n=== ESTADÍSTICAS POR TIPO DE ESTUDIANTE ===");
+        System.out.println("Estudiantes de Pregrado: " + pregrado);
+        System.out.println("Estudiantes de Posgrado: " + posgrado);
+        System.out.println("Estudiantes de Intercambio: " + intercambio);
+        System.out.println("Total: " + listaEstudiantes.size());
+    }
+    
+    /**
+     * NUEVO: Método para aplicar descuentos a todos los estudiantes
+     */
+    public void mostrarDescuentosMatricula() {
+        System.out.println("\n=== DESCUENTOS DE MATRÍCULA ===");
+        for (Estudiante est : listaEstudiantes) {
+            double descuento = est.calcularDescuentoMatricula();
+            System.out.println(est.getNombreCompleto() + " - " + 
+                              est.getTipoEstudiante() + ": " + 
+                              (descuento * 100) + "% de descuento");
+        }
     }
 }
