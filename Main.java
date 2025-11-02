@@ -1,99 +1,158 @@
 package gestionestudiantes;
 
 /**
- * Clase principal que contiene el método main
- * Demuestra la instanciación de objetos y uso de métodos
+ * Clase principal que demuestra el uso de la herencia
+ * Instancia objetos de diferentes subclases y prueba sus métodos
  */
 public class Main {
     
     public static void main(String[] args) {
-        System.out.println("=== SISTEMA DE GESTIÓN DE ESTUDIANTES ===\n");
+        System.out.println("=== SISTEMA DE GESTIÓN DE ESTUDIANTES CON HERENCIA ===\n");
         
-        // Creación de instancias de Estudiante usando diferentes constructores
-        System.out.println("1. CREACIÓN DE OBJETOS ESTUDIANTE");
-        System.out.println("----------------------------------");
+        // ====================================================================
+        // DEMOSTRACIÓN DE HERENCIA: CREACIÓN DE OBJETOS DE DIFERENTES SUBCLASES
+        // ====================================================================
         
-        // Instanciación usando constructor parametrizado
-        Estudiante estudiante1 = new Estudiante("2024001", "Ana", "García", 20, 4.5);
-        Estudiante estudiante2 = new Estudiante("2024002", "Carlos", "López", 22, 3.8);
+        System.out.println("1. CREACIÓN DE ESTUDIANTES DE DIFERENTES TIPOS");
+        System.out.println("===============================================");
         
-        // Instanciación usando constructor por defecto y setters
-        Estudiante estudiante3 = new Estudiante();
-        estudiante3.setCodigo("2024003");
-        estudiante3.setNombre("María");
-        estudiante3.setApellido("Rodríguez");
-        estudiante3.setEdad(19);
-        estudiante3.setPromedio(4.2);
+        // Crear estudiante de pregrado
+        EstudiantePregrado estPregrado1 = new EstudiantePregrado(
+            "2024001", "Ana", "García", 20, 4.5, "Ingeniería de Sistemas", 
+            4, true
+        );
         
-        // Mostrar información de los estudiantes creados
-        System.out.println("Estudiante 1 creado: " + estudiante1.getNombreCompleto());
-        System.out.println("Estudiante 2 creado: " + estudiante2.getNombreCompleto());
-        System.out.println("Estudiante 3 creado: " + estudiante3.getNombreCompleto());
+        EstudiantePregrado estPregrado2 = new EstudiantePregrado(
+            "2024002", "Carlos", "López", 22, 3.8, "Administración", 
+            6, false
+        );
         
-        // Creación de instancia de Curso
-        System.out.println("\n2. CREACIÓN DE CURSO");
-        System.out.println("---------------------");
-        Curso cursoProgramacion = new Curso("Programación en Java", "PROG-JAVA-101");
-        System.out.println("Curso creado: " + cursoProgramacion.getNombreCurso());
+        // Crear estudiante de posgrado
+        EstudiantePosgrado estPosgrado1 = new EstudiantePosgrado(
+            "PG2024001", "María", "Rodríguez", 25, 4.6, "Maestría en IA",
+            "Maestría", "Inteligencia Artificial", true
+        );
         
-        // Agregar estudiantes al curso
-        System.out.println("\n3. AGREGAR ESTUDIANTES AL CURSO");
-        System.out.println("--------------------------------");
-        cursoProgramacion.agregarEstudiante(estudiante1);
-        cursoProgramacion.agregarEstudiante(estudiante2);
-        cursoProgramacion.agregarEstudiante(estudiante3);
+        EstudiantePosgrado estPosgrado2 = new EstudiantePosgrado(
+            "PG2024002", "Roberto", "Silva", 28, 4.8, "Doctorado en Ciencias",
+            "Doctorado", "Bioinformática", true
+        );
         
-        // Demostración de métodos de la clase Curso
-        System.out.println("\n4. OPERACIONES CON EL CURSO");
-        System.out.println("---------------------------");
+        // Crear estudiante de intercambio
+        EstudianteIntercambio estIntercambio1 = new EstudianteIntercambio(
+            "INT2024001", "John", "Smith", 21, 4.2, "Ingeniería Civil",
+            "Estados Unidos", "MIT", 12
+        );
         
-        // Mostrar todos los estudiantes
+        EstudianteIntercambio estIntercambio2 = new EstudianteIntercambio(
+            "INT2024002", "Sophie", "Martin", 23, 4.4, "Medicina",
+            "Francia", "Universidad de París", 6
+        );
+        
+        System.out.println("✓ Se crearon 6 estudiantes de diferentes tipos");
+        
+        // ====================================================================
+        // DEMOSTRACIÓN DE POLIMORFISMO: USO DE OBJETOS A TRAVÉS DE LA CLASE BASE
+        // ====================================================================
+        
+        System.out.println("\n2. POLIMORFISMO: AGREGAR ESTUDIANTES AL CURSO");
+        System.out.println("==============================================");
+        
+        Curso cursoProgramacion = new Curso("Programación Avanzada", "PROG401");
+        
+        // Polimorfismo: podemos agregar cualquier subclase de Estudiante
+        cursoProgramacion.agregarEstudiante(estPregrado1);
+        cursoProgramacion.agregarEstudiante(estPregrado2);
+        cursoProgramacion.agregarEstudiante(estPosgrado1);
+        cursoProgramacion.agregarEstudiante(estPosgrado2);
+        cursoProgramacion.agregarEstudiante(estIntercambio1);
+        cursoProgramacion.agregarEstudiante(estIntercambio2);
+        
+        // ====================================================================
+        // DEMOSTRACIÓN DE MÉTODOS SOBRESCRITOS Y ESPECÍFICOS
+        // ====================================================================
+        
+        System.out.println("\n3. MÉTODOS SOBRESCRITOS Y ESPECÍFICOS");
+        System.out.println("======================================");
+        
+        // Mostrar información de todos los estudiantes
         cursoProgramacion.mostrarEstudiantes();
         
-        // Calcular y mostrar promedio general
-        double promedioGeneral = cursoProgramacion.calcularPromedioGeneral();
-        System.out.println("\nPromedio general del curso: " + String.format("%.2f", promedioGeneral));
+        // Estadísticas por tipo de estudiante
+        cursoProgramacion.mostrarEstadisticasPorTipo();
         
-        // Contar estudiantes sobresalientes
-        int sobresalientes = cursoProgramacion.contarSobresalientes();
-        System.out.println("Estudiantes sobresalientes: " + sobresalientes);
+        // Descuentos de matrícula (método sobrescrito)
+        cursoProgramacion.mostrarDescuentosMatricula();
         
-        // Demostración de métodos de la clase Estudiante
-        System.out.println("\n5. OPERACIONES CON ESTUDIANTES");
-        System.out.println("------------------------------");
+        // ====================================================================
+        // DEMOSTRACIÓN DE MÉTODOS ESPECÍFICOS DE CADA SUBCLASE
+        // ====================================================================
         
-        // Usar método getNombreCompleto
-        System.out.println("Nombre completo estudiante 1: " + estudiante1.getNombreCompleto());
+        System.out.println("\n4. MÉTODOS ESPECÍFICOS DE CADA SUBCLASE");
+        System.out.println("========================================");
         
-        // Usar método esSobresaliente
-        System.out.println("¿Es sobresaliente estudiante 2? " + 
-                          (estudiante2.esSobresaliente() ? "Sí" : "No"));
+        // Método específico de EstudiantePregrado
+        System.out.println("\n--- Métodos de Pregrado ---");
+        estPregrado1.avanzarSemestre();
         
-        // Usar método cumplirAnios
-        System.out.println("\nAntes de cumpleaños - Edad: " + estudiante3.getEdad());
-        estudiante3.cumplirAnios();
-        System.out.println("Después de cumpleaños - Edad: " + estudiante3.getEdad());
+        // Método específico de EstudiantePosgrado
+        System.out.println("\n--- Métodos de Posgrado ---");
+        estPosgrado1.publicarInvestigacion("Nuevos algoritmos de machine learning");
         
-        // Búsqueda de estudiante
-        System.out.println("\n6. BÚSQUEDA DE ESTUDIANTE");
-        System.out.println("--------------------------");
-        Estudiante estudianteEncontrado = cursoProgramacion.buscarEstudiante("2024001");
-        if (estudianteEncontrado != null) {
-            System.out.println("Estudiante encontrado:");
-            System.out.println(estudianteEncontrado.toString());
-        } else {
-            System.out.println("Estudiante no encontrado.");
+        // Método específico de EstudianteIntercambio
+        System.out.println("\n--- Métodos de Intercambio ---");
+        estIntercambio1.mostrarInformacionIntercambio();
+        estIntercambio1.extenderIntercambio(3);
+        
+        // ====================================================================
+        // DEMOSTRACIÓN DE SOBRESCRITURA DE MÉTODOS
+        // ====================================================================
+        
+        System.out.println("\n5. COMPARACIÓN DE MÉTODOS SOBRESCRITOS");
+        System.out.println("=======================================");
+        
+        // esSobresaliente() sobrescrito en EstudiantePosgrado
+        System.out.println("\n¿Es sobresaliente? (criterios diferentes):");
+        System.out.println(estPregrado1.getNombreCompleto() + " (Pregrado): " + 
+                          estPregrado1.esSobresaliente() + " (criterio: ≥4.0)");
+        System.out.println(estPosgrado1.getNombreCompleto() + " (Posgrado): " + 
+                          estPosgrado1.esSobresaliente() + " (criterio: ≥4.3)");
+        
+        // ====================================================================
+        // USO DE INSTANCEOF PARA IDENTIFICAR TIPOS ESPECÍFICOS
+        // ====================================================================
+        
+        System.out.println("\n6. IDENTIFICACIÓN DE TIPOS CON INSTANCEOF");
+        System.out.println("==========================================");
+        
+        for (Estudiante est : cursoProgramacion.getListaEstudiantes()) {
+            if (est instanceof EstudiantePregrado) {
+                EstudiantePregrado pregrado = (EstudiantePregrado) est;
+                System.out.println(pregrado.getNombreCompleto() + " está en semestre " + 
+                                  pregrado.getSemestre());
+            } else if (est instanceof EstudiantePosgrado) {
+                EstudiantePosgrado posgrado = (EstudiantePosgrado) est;
+                System.out.println(posgrado.getNombreCompleto() + " investiga en: " + 
+                                  posgrado.getLineaInvestigacion());
+            } else if (est instanceof EstudianteIntercambio) {
+                EstudianteIntercambio intercambio = (EstudianteIntercambio) est;
+                System.out.println(intercambio.getNombreCompleto() + " viene de: " + 
+                                  intercambio.getPaisOrigen());
+            }
         }
         
-        // Eliminación de estudiante
-        System.out.println("\n7. ELIMINACIÓN DE ESTUDIANTE");
-        System.out.println("----------------------------");
-        cursoProgramacion.eliminarEstudiante("2024002");
+        // ====================================================================
+        // ESTADÍSTICAS FINALES
+        // ====================================================================
         
-        // Mostrar lista actualizada
-        System.out.println("\nLista actualizada después de eliminar:");
-        cursoProgramacion.mostrarEstudiantes();
+        System.out.println("\n7. ESTADÍSTICAS FINALES DEL CURSO");
+        System.out.println("==================================");
         
-        System.out.println("\n=== FIN DEL PROGRAMA ===");
+        System.out.println("Promedio general del curso: " + 
+                          String.format("%.2f", cursoProgramacion.calcularPromedioGeneral()));
+        System.out.println("Estudiantes sobresalientes: " + 
+                          cursoProgramacion.contarSobresalientes());
+        
+        System.out.println("\n=== FIN DE LA DEMOSTRACIÓN DE HERENCIA ===");
     }
 }
